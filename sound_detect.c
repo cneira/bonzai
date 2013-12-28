@@ -1,3 +1,19 @@
+/***********************************************************************
+*                                                                      *
+* This software is part of the mon tools package                       *
+* Copyright (c) 2008-2013  Bonzai BSD Intellectual Property              *
+* and is licensed under the                                            *
+* Common Public License, Version 1.6                                   *
+* by Bonzai Intellectual Property                                        *
+*                                                                      *
+* A copy of the License is available at                                *
+* http://www.opensource.org/licenses/cpl1.0.txt                        *
+*                                                                      *
+*  cneirabustos@gmail.com                                              *
+*                                                                      *
+***********************************************************************/
+
+
 #include "sound_detect.h"
 
  char*  searchpci()
