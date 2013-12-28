@@ -32,4 +32,5 @@
 #define  PCI_CLASS ((p->pc_class << 16) | (p->pc_subclass << 8) |( p->pc_progif))
 
 char* searchpci();
+int loadko(char*);
 #endif

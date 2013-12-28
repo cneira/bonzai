@@ -7,8 +7,6 @@
  ;; http://www.opensource.org/licenses/cpl1.0.txt                       
  ;;  cneirabustos@gmail.com                                             
 
-
-
 (ql:quickload "cffi")
 (defpackage :cffi-user
   (:use :common-lisp :cffi))
@@ -24,7 +22,7 @@
 
 (use-foreign-library libsys)
 (defcfun "searchpci"  :string )
-
+(defcfun "loadko"  :int ( ko :string ))
 (defvar a (searchpci))
 ;transform to list the string with pci devices
 (defvar b 

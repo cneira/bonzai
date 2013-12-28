@@ -66,4 +66,14 @@
   return onek;
 }
 
-
+int loadko(char* ko)
+{
+  if ( kld_isloaded(ko) != 0 )
+    {
+      if( kld_load(ko) < 0 ) 
+	return -1; 
+      else return 1;
+    }else {
+    return 0;
+  }
+}
