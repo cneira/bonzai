@@ -1,1 +1,0 @@
-(defctype foo int)
