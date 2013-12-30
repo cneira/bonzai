@@ -50,11 +50,12 @@
          
     for (p = conf; p < &conf[pc.num_matches]; p++) 
       {
-	sprintf(plist,"(:pci%d (:class %x :vendor %x :device %x)) ",
+	sprintf(plist,":pci%d (:class %x :vendor %x :device %x) ",
 		i,
 		PCI_CLASS,
                 p->pc_vendor,
 		p->pc_device);
+
 	strcat(onek,plist);
 #ifdef _DEBUG
 	printf("%s\n",plist);
