@@ -8,9 +8,9 @@
  ;;  cneirabustos@gmail.com                                             
 
 (ql:quickload "cffi")
-;(ql:quickload "clawk")
+
 (defpackage :cffi-user
-  (:use :common-lisp :cffi :clawk))
+  (:use :common-lisp :cffi ))
 
 (in-package :cffi-user)
 
@@ -36,19 +36,25 @@
 
 ;example get class from pci element 0 element in list 
 
-(getf (getf z :pci0 ) :device )
+(getf (getf *pci_devices* :pci0 ) :device )
+
+
+;multimedia class : 0x040100,  0x040300  
+
 
 
 ;generate sound drivers pclist 
 
-
 (defparameter *soundcards* (make-hash-table))
-;nvidia ones
 
+;nvidia ones
 
 (gethash 'snd_ich *soundcards*)
 (gethash 'snd_hda *soundcards*)
 (gethash '0x00da10de *soundcards*)
+
+(loop for k being the hash-key of *soundcards* do (print k))
+
 
 ;snd_hda
 
@@ -57,6 +63,9 @@
 (setf (gethash '0x03f010de *soundcards*) 'snd_hda ) 
 (setf (gethash '0x037110de *soundcards*) 'snd_hda ) 
 (setf (gethash '0x026c10de *soundcards*) 'snd_hda ) 
+
+
+
 (setf (gethash '0x03e410de *soundcards*) 'snd_hda ) 
 (setf (gethash '0x044a10de *soundcards*) 'snd_hda ) 
 (setf (gethash '0x044b10de *soundcards*) 'snd_hda ) 
@@ -194,16 +203,10 @@
 
 
 (setf (gethash '0x30591106 *soundcards*) 'snd_via8233)
-
 (setf (gethash '0x30581106 *soundcards*) 'snd_via82c686)
-
 (setf (gethash '0x40004005 *soundcards*) 'snd_als4000)
-
 (setf (gethash '0x000112eb *soundcards*) 'snd_aureal)
-
-
 (setf (gethash '0x011113f6 *soundcards*) 'snd_cmi)
-
 (setf (gethash '0x60031013 *soundcards*) 'snd_csa)
 (setf (gethash '0x60051013 *soundcards*) 'snd_cs4281)
 
