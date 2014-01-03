@@ -50,8 +50,10 @@
 (gethash 'snd_hda *soundcards*)
 (gethash '0x00da10de *soundcards*)
 
+;snd_hda
 
-(setf (gethash '0x00da10de  *soundcards*) 'snd_hda ) 
+
+(setf (gethash '0x00da10de *soundcards*) 'snd_hda ) 
 (setf (gethash '0x03f010de *soundcards*) 'snd_hda ) 
 (setf (gethash '0x037110de *soundcards*) 'snd_hda ) 
 (setf (gethash '0x026c10de *soundcards*) 'snd_hda ) 
@@ -119,8 +121,90 @@
 (setf (gethash '0xffff17aa *soundcards*) 'snd_hda ) 
 
 
+;snd_ich
+
+(setf (gethash '0x01b110de *soundcards*) 'snd_ich)
+(setf (gethash '0x006a10de *soundcards*) 'snd_ich)
+(setf (gethash '0x008a10de *soundcards*) 'snd_ich)
+(setf (gethash '0x00da10de *soundcards*) 'snd_ich)
+(setf (gethash '0x026b10de *soundcards*) 'snd_ich)
+(setf (gethash '0x00ea10de *soundcards*) 'snd_ich)
+(setf (gethash '0x005910de *soundcards*) 'snd_ich)
+(setf (gethash '0x74451022 *soundcards*) 'snd_ich)
+(setf (gethash '0x746d1022 *soundcards*) 'snd_ich)
+(setf (gethash '0x24c58086 *soundcards*) 'snd_ich)
+(setf (gethash '0x24d58086 *soundcards*) 'snd_ich)
+(setf (gethash '0x24158086 *soundcards*) 'snd_ich)
+(setf (gethash '0x266e8086 *soundcards*) 'snd_ich)
+(setf (gethash '0x24858086 *soundcards*) 'snd_ich)
+(setf (gethash '0x24458086 *soundcards*) 'snd_ich)
+(setf (gethash '0x24258086 *soundcards*) 'snd_ich)
+(setf (gethash '0x71958086 *soundcards*) 'snd_ich)
+(setf (gethash '0x70121039 *soundcards*) 'snd_ich)
+
+;snd_ds1
+
+(setf (gethash '0x000a1073 *soundcards*) 'snd_ds1)
+(setf (gethash '0x000c1073 *soundcards*) 'snd_ds1)
+(setf (gethash '0x00001073 *soundcards*) 'snd_ds1)
+(setf (gethash '0x00101073 *soundcards*) 'snd_ds1)
+(setf (gethash '0x000d1073 *soundcards*) 'snd_ds1)
+
+;snd_emu10k1 
+
+(setf (gethash '0x00021102  *soundcards*) 'snd_emu10k1)
+(setf (gethash '0x00041102  *soundcards*) 'snd_emu10k1)
+(setf (gethash '0x00071102 *soundcards*)  'snd_emu10k1)
+(setf (gethash '0x10211102  *soundcards*) 'snd_emu10k1)
 
 
+(setf (gethash '0x89381102 *soundcards*) 'snd_es137x)
+(setf (gethash '0x50001274 *soundcards*) 'snd_es137x)
+(setf (gethash '0x13711274 *soundcards*) 'snd_es137x)
+(setf (gethash '0x58801274 *soundcards*) 'snd_es137x)
 
+
+(setf (gethash '0x08011319 *soundcards*) 'snd_fm801)
+(setf (gethash '0x08021319 *soundcards*) 'snd_fm801)
+(setf (gethash '0x08011319 *soundcards*) 'snd_fm801)
+(setf (gethash '0x08021319 *soundcards*) 'snd_fm801)
+
+
+(setf (gethash '0x01001285 *soundcards*) 'snd_maestro)
+(setf (gethash '0x01001285 *soundcards*) 'snd_maestro)
+(setf (gethash '0x01001285 *soundcards*) 'snd_maestro)
+(setf (gethash '0x1968125d *soundcards*) 'snd_maestro)
+(setf (gethash '0x1978125d *soundcards*) 'snd_maestro)
+(setf (gethash '0x1988125d *soundcards*) 'snd_maestro)
+(setf (gethash '0x1998125d *soundcards*) 'snd_maestro)
+(setf (gethash '0x199a125d *soundcards*) 'snd_maestro)
+(setf (gethash '0x803c1033 *soundcards*) 'snd_maestro)
+(setf (gethash '0x80581033 *soundcards*) 'snd_maestro)
+
+
+(setf (gethash '0x800510c8 *soundcards*) 'snd_neomagic)
+(setf (gethash '0x800610c8 *soundcards*) 'snd_neomagic)
+
+(setf (gethash '0x20001023 *soundcards*) 'snd_t4dwave)
+(setf (gethash '0x20011023 *soundcards*) 'snd_t4dwave)
+(setf (gethash '0x70181039 *soundcards*) 'snd_t4dwave)
+(setf (gethash '0x545110b9 *soundcards*) 'snd_t4dwave)
+(setf (gethash '0x546110b9 *soundcards*) 'snd_t4dwave)
+(setf (gethash '0x545510b9 *soundcards*) 'snd_t4dwave)
+
+
+(setf (gethash '0x30591106 *soundcards*) 'snd_via8233)
+
+(setf (gethash '0x30581106 *soundcards*) 'snd_via82c686)
+
+(setf (gethash '0x40004005 *soundcards*) 'snd_als4000)
+
+(setf (gethash '0x000112eb *soundcards*) 'snd_aureal)
+
+
+(setf (gethash '0x011113f6 *soundcards*) 'snd_cmi)
+
+(setf (gethash '0x60031013 *soundcards*) 'snd_csa)
+(setf (gethash '0x60051013 *soundcards*) 'snd_cs4281)
 
 
