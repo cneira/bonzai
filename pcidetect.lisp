@@ -216,15 +216,19 @@
 	 )
 ) 
 
+
 (defparameter *kernel_extensions* 
-(loop for x in *scards* 
-      when ( not (eq NIL (gethash x *soundcards*) ) )  
-       collect x)
-)
+  (loop for x in *scards* 
+	when ( not (eq NIL (gethash x *soundcards*) ) )  
+	collect (gethash x *soundcards*) )
+  )
+
+
+
 ;load kernel extensions
-(defun load_sound 
-(loop for x in *kernel_extensions* 
-     do (loadko (string x)) )
+(defun load_sound () 
+  (loop for x in *kernel_extensions* 
+	do (loadko (string x)) )
 )
 
 
