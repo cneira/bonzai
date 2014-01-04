@@ -50,8 +50,7 @@
          
     for (p = conf; p < &conf[pc.num_matches]; p++) 
       {
-	sprintf(plist,":pci%d (:class %x :vendor %x :device %x) ",
-		i,
+	sprintf(plist," (:class %x :vendor %x :device %x) ",
 		PCI_CLASS,
                 p->pc_vendor,
 		p->pc_device);
@@ -60,7 +59,6 @@
 #ifdef _DEBUG
 	printf("%s\n",plist);
 #endif
-	i++;
       }
   } while (pc.status == PCI_GETCONF_MORE_DEVS);
   close(fd);

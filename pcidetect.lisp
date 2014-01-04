@@ -14,34 +14,6 @@
 
 (in-package :cffi-user)
 
-(define-foreign-library libsys
-  (:unix (:or "./libsys.so" "libsys.so" ))
-  (t (:default "libsys")))
-
-;There is currently a bug in cffi or sbcl all functions must not contain a _ or they will not
-;be found error : alien function ,etc..
-
-(use-foreign-library libsys)
-
-;function prototype definitions
-(defcfun "searchpci"  :string )
-(defcfun "loadko"  :int ( ko :string ))
-;end prototype 
-
-;(loadko "sound")
-;create plist with all pci devices connected
-
-(defparameter allpci (concatenate 'string "(" (searchpci) ")"))
-(defparameter *pci_devices* (read-from-string allpci))
-
-;example get class from pci element 0 element in list 
-
-(getf (getf *pci_devices* :pci0 ) :device )
-
-
-;multimedia class : 0x040100,  0x040300  
-
-
 
 ;generate sound drivers pclist 
 
@@ -49,23 +21,14 @@
 
 ;nvidia ones
 
-(gethash 'snd_ich *soundcards*)
-(gethash 'snd_hda *soundcards*)
-(gethash '0x00da10de *soundcards*)
-
-(loop for k being the hash-key of *soundcards* do (print k))
-
-
-;snd_hda
-
+;(gethash 'snd_ich *soundcards*)
+;(gethash 'snd_hda *soundcards*)
+;(gethash '0x00da10de *soundcards*)
 
 (setf (gethash '0x00da10de *soundcards*) 'snd_hda ) 
 (setf (gethash '0x03f010de *soundcards*) 'snd_hda ) 
 (setf (gethash '0x037110de *soundcards*) 'snd_hda ) 
 (setf (gethash '0x026c10de *soundcards*) 'snd_hda ) 
-
-
-
 (setf (gethash '0x03e410de *soundcards*) 'snd_hda ) 
 (setf (gethash '0x044a10de *soundcards*) 'snd_hda ) 
 (setf (gethash '0x044b10de *soundcards*) 'snd_hda ) 
@@ -128,10 +91,7 @@
 (setf (gethash '0x206617aa *soundcards*) 'snd_hda ) 
 (setf (gethash '0x101517aa *soundcards*) 'snd_hda ) 
 (setf (gethash '0xffff17aa *soundcards*) 'snd_hda ) 
-
-
 ;snd_ich
-
 (setf (gethash '0x01b110de *soundcards*) 'snd_ich)
 (setf (gethash '0x006a10de *soundcards*) 'snd_ich)
 (setf (gethash '0x008a10de *soundcards*) 'snd_ich)
@@ -209,5 +169,62 @@
 (setf (gethash '0x011113f6 *soundcards*) 'snd_cmi)
 (setf (gethash '0x60031013 *soundcards*) 'snd_csa)
 (setf (gethash '0x60051013 *soundcards*) 'snd_cs4281)
+
+
+
+;hardware detection functions 
+
+(define-foreign-library libsys
+  (:unix (:or "./libsys.so" "libsys.so" ))
+  (t (:default "libsys")))
+
+;There is currently a bug in cffi or sbcl all functions must not contain a _ or they will not
+;be found error : alien function ,etc..
+
+(use-foreign-library libsys)
+
+;function prototype definitions
+(defcfun "searchpci"  :string )
+(defcfun "loadko"  :int ( ko :string ))
+;end prototype 
+
+;(loadko "sound")
+
+
+(defparameter allpci (concatenate 'string "(" (searchpci) ")"))
+(defparameter *pci_devices* (read-from-string allpci))
+
+
+;multimedia class : 0x040100,  0x040300  
+
+;example string
+(defparameter l   (read-from-string "(  (:class 40100 :vendor 8086 :device da10de)
+ (:class 40800 :vendor 8086 :device da11de))
+")) 
+
+;check only for multimedia devices
+(loop for x in  *pci_devices*  
+	 when ( or  (= 40800 (getf x :class)) (= 40100 (getf x :class))    )
+	 collect ( getf x :device)   
+	 )
+
+
+(defparameter *scards* 
+(loop for x in *pci_devices*  
+	 when ( or  (= 40800 (getf x :class)) (= 40100 (getf x :class))    )
+	 collect ( getf x :device)   
+	 )
+) 
+
+(defparameter *kernel_extensions* 
+(loop for x in *scards* 
+      when ( not (eq NIL (gethash x *soundcards*) ) )  
+       collect x)
+)
+;load kernel extensions
+(defun load_sound 
+(loop for x in *kernel_extensions* 
+     do (loadko (string x)) )
+)
 
 
