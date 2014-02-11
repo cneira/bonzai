@@ -1160,7 +1160,7 @@ thunar_launcher_open_file (ThunarLauncher *launcher,
                            ThunarFile     *file)
 {
   GList files;
-
+  GError *err;
   _thunar_return_if_fail (THUNAR_IS_LAUNCHER (launcher));
   _thunar_return_if_fail (THUNAR_IS_FILE (file));
 
@@ -1168,24 +1168,37 @@ thunar_launcher_open_file (ThunarLauncher *launcher,
   files.next = NULL;
   files.prev = NULL;
 
-  //make us aware of a bonzai bundle
-
+  
+  //make this dir a bonzai bundle 
+  
   const char* name = g_file_info_get_name(file->info);
   
-  if(strstr(name,".app")!=NULL)
+  if((strstr(name,".app")!=NULL) && (thunar_file_is_directory(file)))
     {
+  
+      printf("entering\n");
+      GFile *temp;
+      GFile *orig;
       GFile  *working_directory;
       working_directory =  thunar_file_get_file (launcher->current_directory);
-      g_object_unref( file->gfile);
-      file->gfile =  g_file_get_child(file->gfile,"hi.sh");
+      printf("location file->gfile %s filename %s\n",
+	     thunar_g_file_get_location(file->gfile),name);
+      temp=  g_file_get_child(file->gfile,"hi.sh");
+      printf("child location %s\n",thunar_g_file_get_location(temp));
+      //g_object_unref(file->gfile);
+      orig = file->gfile ;
+      file->gfile = temp;
       files.data = file;
       thunar_launcher_execute_files(launcher,&files);
+      file->gfile = orig;
+      g_object_unref(temp);
       printf("current dir %s\n",g_file_get_path (working_directory));
-     
-      
+      printf("location %s\n",thunar_g_file_get_location(file->gfile));
+      printf("exiting\n");
       return;
     }
-    
+  
+  
   if (thunar_file_is_directory (file))
     {
       
