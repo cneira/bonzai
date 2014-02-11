@@ -1168,8 +1168,27 @@ thunar_launcher_open_file (ThunarLauncher *launcher,
   files.next = NULL;
   files.prev = NULL;
 
+  //make us aware of a bonzai bundle
+
+  const char* name = g_file_info_get_name(file->info);
+  
+  if(strstr(name,".app")!=NULL)
+    {
+      GFile  *working_directory;
+      working_directory =  thunar_file_get_file (launcher->current_directory);
+      g_object_unref( file->gfile);
+      file->gfile =  g_file_get_child(file->gfile,"hi.sh");
+      files.data = file;
+      thunar_launcher_execute_files(launcher,&files);
+      printf("current dir %s\n",g_file_get_path (working_directory));
+     
+      
+      return;
+    }
+    
   if (thunar_file_is_directory (file))
     {
+      
       /* check if we're in a regular view (i.e. current_directory is set) */
       if (G_LIKELY (launcher->current_directory != NULL))
         {
