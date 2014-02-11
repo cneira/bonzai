@@ -140,60 +140,6 @@ static guint              file_signals[LAST_SIGNAL];
 
 
 
-typedef enum
-{
-  THUNAR_FILE_FLAG_THUMB_MASK     = 0x03,   /* storage for ThunarFileThumbState */
-  THUNAR_FILE_FLAG_IN_DESTRUCTION = 1 << 2, /* for avoiding recursion during destroy */
-  THUNAR_FILE_FLAG_IS_MOUNTED     = 1 << 3, /* whether this file is mounted */
-}
-ThunarFileFlags;
-
-struct _ThunarFileClass
-{
-  GObjectClass __parent__;
-
-  /* signals */
-  void (*destroy) (ThunarFile *file);
-};
-
-struct _ThunarFile
-{
-  GObject __parent__;
-
-  /* storage for the file information */
-  GFileInfo            *info;
-  GFileType             kind;
-  GFile                *gfile;
-  gchar                *content_type;
-  gchar                *icon_name;
-
-  gchar                *custom_icon_name;
-  gchar                *display_name;
-  gchar                *basename;
-  gchar                *thumbnail_path;
-
-  /* sorting */
-  gchar                *collate_key;
-  gchar                *collate_key_nocase;
-
-  /* flags for thumbnail state etc */
-  ThunarFileFlags       flags;
-};
-
-typedef struct
-{
-  GFileMonitor  *monitor;
-  guint          watch_count;
-}
-ThunarFileWatch;
-
-typedef struct
-{
-  ThunarFileGetFunc  func;
-  gpointer           user_data;
-  GCancellable      *cancellable;
-}
-ThunarFileGetData;
 
 static struct
 {
