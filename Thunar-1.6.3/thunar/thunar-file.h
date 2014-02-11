@@ -31,8 +31,62 @@
 
 G_BEGIN_DECLS;
 
-typedef struct _ThunarFileClass ThunarFileClass;
+
+typedef enum
+{
+  THUNAR_FILE_FLAG_THUMB_MASK     = 0x03,   /* storage for ThunarFileThumbState */
+  THUNAR_FILE_FLAG_IN_DESTRUCTION = 1 << 2, /* for avoiding recursion during destroy */
+  THUNAR_FILE_FLAG_IS_MOUNTED     = 1 << 3, /* whether this file is mounted */
+}
+ThunarFileFlags;
+
+
+struct _ThunarFile
+{
+  GObject __parent__;
+
+  /* storage for the file information */
+  GFileInfo            *info;
+  GFileType             kind;
+  GFile                *gfile;
+  gchar                *content_type;
+  gchar                *icon_name;
+
+  gchar                *custom_icon_name;
+  gchar                *display_name;
+  gchar                *basename;
+  gchar                *thumbnail_path;
+
+  /* sorting */
+  gchar                *collate_key;
+  gchar                *collate_key_nocase;
+
+  /* flags for thumbnail state etc */
+  ThunarFileFlags       flags;
+};
+
 typedef struct _ThunarFile      ThunarFile;
+
+struct _ThunarFileClass
+{
+  GObjectClass __parent__;
+
+  /* signals */
+  void (*destroy) (ThunarFile *file);
+};
+typedef struct _ThunarFileClass ThunarFileClass;
+
+typedef struct
+{
+  GFileMonitor  *monitor;
+  guint          watch_count;
+}
+ThunarFileWatch;
+
+
+
+
+
 
 #define THUNAR_TYPE_FILE            (thunar_file_get_type ())
 #define THUNAR_FILE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), THUNAR_TYPE_FILE, ThunarFile))
@@ -308,6 +362,16 @@ gboolean          thunar_file_is_desktop           (const ThunarFile *file);
 G_STMT_START{                                             \
   thunarx_file_info_changed (THUNARX_FILE_INFO ((file))); \
 }G_STMT_END
+
+
+typedef struct
+{
+  ThunarFileGetFunc  func;
+  gpointer           user_data;
+  GCancellable      *cancellable;
+}
+ThunarFileGetData;
+
 
 
 G_END_DECLS;
