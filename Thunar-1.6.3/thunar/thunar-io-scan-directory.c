@@ -82,7 +82,7 @@ thunar_io_scan_directory (ThunarJob          *job,
   namespace = G_FILE_ATTRIBUTE_STANDARD_NAME ","
               G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME;
   
-  info = g_file_query_info(file,G_FILE_ATTRIBUTE_STANDARD_NAME,flags,
+  info = g_file_query_info(file,namespace,flags,
 			   exo_job_get_cancellable(EXO_JOB(job)),&err);
 
   
@@ -92,9 +92,11 @@ thunar_io_scan_directory (ThunarJob          *job,
      (strstr(name,".app")!= NULL))
     {
       is_bonzai_package=TRUE;
+      printf("base name %s\n",g_file_get_basename(file));
+
     }
 
-   
+  //Done check package   
   
 /****/
 
@@ -145,11 +147,9 @@ thunar_io_scan_directory (ThunarJob          *job,
 	  break;
 	}
 
-  
-      
       if (G_UNLIKELY (info == NULL))
         break;
-
+      
       is_mounted = TRUE;
       if (err != NULL)
         {
