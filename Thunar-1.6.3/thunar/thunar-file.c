@@ -1386,7 +1386,10 @@ thunar_file_execute (ThunarFile  *file,
   _thunar_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   location = thunar_g_file_get_location (file->gfile);
+  printf("getting location from file  %s name %s\n",location,
+	 g_file_info_get_name(file->info)); 
 
+  
   if (thunar_file_is_desktop_file (file, &is_secure))
     {
       /* parse file first, even if it is insecure */
